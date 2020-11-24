@@ -1,20 +1,20 @@
-#incude <iostream>
-#incude <iomanip>
+#include <iostream>
+#include <iomanip>
+#include <cstring>
 
-#define CPP2_PRIME_UPPER_LIMIT 1000000 //æŽ¢ç´¢ã™ã‚‹å€¤ã®ä¸Šé™å€¤ã€‚
+#define CPP2_PRIME_UPPER_LIMIT 10000000 //’Tõ‚·‚é’l‚ÌãŒÀ’lB
 
-/*--------------------------------------------------------*/
+/* --------------------------------------------------------------- */
 /*
- *nth_prime
- *
- * ä¸Žãˆã‚‰ã‚ŒãŸæ­£æ•´æ•°aã¨dã¨nã«å¯¾ã—ã¦ã€ã“ã®ç­‰å·®æ•°åˆ—ã«å«ã¾ã‚Œã‚‹
- * nç•ªç›®ã®ç´ æ•°ã‚’è¿”ã™ã€‚
- *
- * TODO: ã“ã®nth_primeé–¢æ•°ã‚’å®Ÿè£…ã›ã‚ˆã€‚å¿…è¦ã§ã‚ã‚Œã°
- * ä»–ã«é–¢æ•°ã‚„ãƒ•ã‚¡ã‚¤ãƒ«ã‚’ä½œæˆã›ã‚ˆã€‚
- *
- */
-/*--------------------------------------------------------*/
+* nth_prime
+*
+* —^‚¦‚ç‚ê‚½³®” a ‚Æ d ‚Æ n ‚É‘Î‚µ‚ÄA‚±‚Ì“™·”—ñ‚ÉŠÜ‚Ü‚ê‚é n ”Ô–Ú‚Ì
+* ‘f”‚ð•Ô‚·B
+*
+* TODO: ‚±‚Ì nth_prime ŠÖ”‚ðŽÀ‘•‚¹‚æB•K—v‚Å‚ ‚ê‚Î‘¼‚ÉŠÖ”‚â
+* ƒtƒ@ƒCƒ‹‚ðì¬‚¹‚æB
+*/
+/* -------------------------------------------------------------- */
 
 bool sosu(unsigned int x) {
 	if(x < 2) {
@@ -34,22 +34,40 @@ bool sosu(unsigned int x) {
 	return 1;
 }
 
-int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
-	unsigned int x;
+template<class T>
+T nth_prime(T a, T d, T n) {
+    unsigned int x;
 
 	unsigned int count = 0;
 
-	for(int i = 0;i < CPP2_PRIME_UPPER_LIMIT; i++) {
-		x = a + d*i;
+    try
+    {
+        if (typeid(a).name() != typeid(x).name()) {
+            throw "a‚Ì’l‚Í”’l‚Å‚Í‚ ‚è‚Ü‚¹‚ñB";
+        }
+        if (typeid(d).name() != typeid(x).name()) {
+            throw "d‚Ì’l‚Í”’l‚Å‚Í‚ ‚è‚Ü‚¹‚ñB";
+        }
+        if (typeid(n).name() != typeid(x).name()) {
+            throw "n‚Ì’l‚Í”’l‚Å‚Í‚ ‚è‚Ü‚¹‚ñB";
+        }
 
-		if(sosu(x)) {
-			count++;
-		}
+        for (int i = 0; i < CPP2_PRIME_UPPER_LIMIT; i++) {
+            x = a + i*d;
 
-		if(count == n) {
-			return x;
-		}
-	}
+            if (sosu(x)) {
+                count++;
+            }
+
+            if (typeid(n).name() != typeid(x).name() && count == n) {
+                return x;
+            }
+        }
+    }
+    catch (char* err)
+    {
+        return err;
+    }
 
 	return 0;
 }
@@ -62,49 +80,52 @@ int main() {
 	std::cout << std::setw(whd * 2) << "92809" << std::endl << std::endl;
 
 	std::cout << std::setw(whd * 4) << "179 10 203" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(367, 10, 203);
-        std::cout << std::setw(whd * 2) << "6709" << std::endl << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(367, 10, 203);
+	std::cout << std::setw(whd * 2) << "6709" << std::endl << std::endl;
 
 	std::cout << std::setw(whd * 4) << "271 37 39" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(271, 37, 39);
-        std::cout << std::setw(whd * 2) << "12037" << std::endl << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(271, 37, 39);
+	std::cout << std::setw(whd * 2) << "12037" << std::endl << std::endl;
 
 	std::cout << std::setw(whd * 4) << "103 230 1" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(103, 230, 1);
-        std::cout << std::setw(whd * 2) << "103" << std::endl << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(103, 230, 1);
+	std::cout << std::setw(whd * 2) << "103" << std::endl << std::endl;
 
-        std::cout << std::setw(whd * 4) << "27 104 185" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(27, 104, 185);
-        std::cout << std::setw(whd * 2) << "93523" << std::endl << std::endl;
+	std::cout << std::setw(whd * 4) << "27 104 185" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(27, 104, 185);
+	std::cout << std::setw(whd * 2) << "93523" << std::endl << std::endl;
 
 	std::cout << std::setw(whd * 4) << "253 50 85" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(253, 50, 85);
-        std::cout << std::setw(whd * 2) << "14503" << std::endl << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(253, 50, 85);
+	std::cout << std::setw(whd * 2) << "14503" << std::endl << std::endl;
 
-        std::cout << std::setw(whd * 4) << "1 1 1" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(1, 1, 1);
-        std::cout << std::setw(whd * 2) << "2" << std::endl << std::endl;
-
-        std::cout << std::setw(whd * 4) << "9075 337 210" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(9075, 337, 210);
-        std::cout << std::setw(whd * 2) << "899429" << std::endl << std::endl;
+	std::cout << std::setw(whd * 4) << "1 1 1" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(1, 1, 1);
+	std::cout << std::setw(whd * 2) << "2" << std::endl << std::endl;
+	
+	std::cout << std::setw(whd * 4) << "9075 337 210" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(9075, 337, 210);
+	std::cout << std::setw(whd * 2) << "899429" << std::endl << std::endl;
 
 	std::cout << std::setw(whd * 4) << "307 24 79" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(307, 24, 79);
-        std::cout << std::setw(whd * 2) << "5107" << std::endl << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(307, 24, 79);
+	std::cout << std::setw(whd * 2) << "5107" << std::endl << std::endl;
 
-        std::cout << std::setw(whd * 4) << "331 221 177" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(331, 221, 177);
-        std::cout << std::setw(whd * 2) << "412717" << std::endl << std::endl;
+	std::cout << std::setw(whd * 4) << "331 221 177" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(331, 221, 177);
+	std::cout << std::setw(whd * 2) << "412717" << std::endl << std::endl;
 
-        std::cout << std::setw(whd * 4) << "259 170 40" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(259, 170, 40);
-        std::cout << std::setw(whd * 2) << "22699" << std::endl << std::endl;
+	std::cout << std::setw(whd * 4) << "259 170 40" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(259, 170, 40);
+	std::cout << std::setw(whd * 2) << "22699" << std::endl << std::endl;
 
-        std::cout << std::setw(whd * 4) << "" << std::endl;
-        std::cout << std::setw(whd * 2) << nth_prime(269, 58, 102);
-        std::cout << std::setw(whd * 2) << "25673" << std::endl << std::endl;
+	std::cout << std::setw(whd * 4) << "269 58 102" << std::endl;
+	std::cout << std::setw(whd * 2) << nth_prime(269, 58, 102);
+    std::cout << std::setw(whd * 2) << "25673" << std::endl << std::endl;
 
+    std::cout << std::setw(whd * 4) << "a b c" << std::endl;
+    std::cout << std::setw(whd * 2) << nth_prime("a", "b", "c");
+    std::cout << std::setw(whd * 2) << "—áŠO‚Ìˆ—" << std::endl << std::endl;
 
 
 	std::cin.get();
