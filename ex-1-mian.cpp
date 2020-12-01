@@ -1,6 +1,5 @@
 #include <iostream>
 #include <iomanip>
-#include <cstring>
 
 #define CPP2_PRIME_UPPER_LIMIT 10000000 //探索する値の上限値。
 
@@ -34,99 +33,73 @@ bool sosu(unsigned int x) {
 	return 1;
 }
 
-template<class T>
-T nth_prime(T a, T d, T n) {
-    unsigned int x;
+int nth_prime(unsigned int a, unsigned int d, unsigned int n) {
+    int x;
 
-	unsigned int count = 0;
+	int count = 0;
 
-    try
-    {
-        if (typeid(a).name() != typeid(x).name()) {
-            throw "aの値は数値ではありません。";
-        }
-        if (typeid(d).name() != typeid(x).name()) {
-            throw "dの値は数値ではありません。";
-        }
-        if (typeid(n).name() != typeid(x).name()) {
-            throw "nの値は数値ではありません。";
+    for (int i = 0; i < CPP2_PRIME_UPPER_LIMIT; i++) {
+        x = a + i*d;
+
+        if (sosu(x)) {
+            count++;
         }
 
-        for (int i = 0; i < CPP2_PRIME_UPPER_LIMIT; i++) {
-            x = a + i*d;
-
-            if (sosu(x)) {
-                count++;
-            }
-
-            if (typeid(n).name() != typeid(x).name() && count == n) {
-                return x;
-            }
+        if (count == n) {
+            return x;
         }
     }
-    catch (char* err)
-    {
-        return err;
-    }
 
-	return 0;
+    return 0;
+}
+
+void show_prime(unsigned int a, unsigned int d, unsigned int n, unsigned int ans) {
+    int whd = 10;
+
+    int prime = nth_prime(a, d, n);
+
+    if (prime == ans)
+    {
+        std::cout << std::setw(whd) << "正解です。" << std::endl;
+        std::cout << std::setw(whd) << "計算結果と問題の答えは " << std::endl;
+        std::cout << prime << " です。" << std::endl << std::endl;
+    }
+    else
+    {
+        std::cout << std::setw(whd) << "不正解です。" << std::endl;
+        std::cout << std::setw(whd) << "計算結果は " << std::endl;
+        std::cout << prime << " です。" << std::endl;
+        std::cout << std::setw(whd) << "問題の答えは " << std::endl;
+        std::cout << ans << " です。" << std::endl << std::endl;
+    }
 }
 
 int main() {
-	int whd = 5;
+	int whd = 10;
 
-	std::cout << std::setw(whd * 4) << "367 186 151" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(367, 186, 151);
-	std::cout << std::setw(whd * 2) << "92809" << std::endl << std::endl;
+    show_prime(367, 186, 151, 92809);
 
-	std::cout << std::setw(whd * 4) << "179 10 203" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(367, 10, 203);
-	std::cout << std::setw(whd * 2) << "6709" << std::endl << std::endl;
+    show_prime(179, 10, 203, 6709);
 
-	std::cout << std::setw(whd * 4) << "271 37 39" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(271, 37, 39);
-	std::cout << std::setw(whd * 2) << "12037" << std::endl << std::endl;
+    show_prime(271, 37, 39, 12037);
 
-	std::cout << std::setw(whd * 4) << "103 230 1" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(103, 230, 1);
-	std::cout << std::setw(whd * 2) << "103" << std::endl << std::endl;
+    show_prime(103, 230, 1, 103);
 
-	std::cout << std::setw(whd * 4) << "27 104 185" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(27, 104, 185);
-	std::cout << std::setw(whd * 2) << "93523" << std::endl << std::endl;
+    show_prime(27, 104, 185, 93523);
 
-	std::cout << std::setw(whd * 4) << "253 50 85" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(253, 50, 85);
-	std::cout << std::setw(whd * 2) << "14503" << std::endl << std::endl;
+    show_prime(253, 50, 85, 14503);
 
-	std::cout << std::setw(whd * 4) << "1 1 1" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(1, 1, 1);
-	std::cout << std::setw(whd * 2) << "2" << std::endl << std::endl;
+    show_prime(1, 1, 1, 2);
 	
-	std::cout << std::setw(whd * 4) << "9075 337 210" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(9075, 337, 210);
-	std::cout << std::setw(whd * 2) << "899429" << std::endl << std::endl;
+    show_prime(9075, 337, 210, 899429);
 
-	std::cout << std::setw(whd * 4) << "307 24 79" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(307, 24, 79);
-	std::cout << std::setw(whd * 2) << "5107" << std::endl << std::endl;
+    show_prime(307, 24, 79, 5107);
 
-	std::cout << std::setw(whd * 4) << "331 221 177" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(331, 221, 177);
-	std::cout << std::setw(whd * 2) << "412717" << std::endl << std::endl;
+    show_prime(331, 221, 177, 412717);
 
-	std::cout << std::setw(whd * 4) << "259 170 40" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(259, 170, 40);
-	std::cout << std::setw(whd * 2) << "22699" << std::endl << std::endl;
+    show_prime(259, 170, 40, 22699);
 
-	std::cout << std::setw(whd * 4) << "269 58 102" << std::endl;
-	std::cout << std::setw(whd * 2) << nth_prime(269, 58, 102);
-    std::cout << std::setw(whd * 2) << "25673" << std::endl << std::endl;
-
-    std::cout << std::setw(whd * 4) << "a b c" << std::endl;
-    std::cout << std::setw(whd * 2) << nth_prime("a", "b", "c");
-    std::cout << std::setw(whd * 2) << "例外の処理" << std::endl << std::endl;
-
+    show_prime(269, 58, 102, 25673);
 
 	std::cin.get();
 	return 0;
