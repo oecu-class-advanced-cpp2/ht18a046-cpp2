@@ -7,6 +7,7 @@ namespace cpp2 {
     * mxci
     * 
     * mcxi記法を解析するクラスです。
+    * 
     */
     /*---------------------------------------------*/
     class mcxi
@@ -18,17 +19,17 @@ namespace cpp2 {
 int main() {
     cpp2::mcxi a0("xi");
     cpp2::mcxi b0("x9i");
-    auto result0 = a0 + b0;
+    cpp2::mcxi result0 = a0 + b0;
     std::cout<< "3x" << " " << result0.to_string() << std::endl;
 
     cpp2::mcxi a1("i");
     cpp2::mcxi b1("9i");
-    auto result1 = a1 + b1;
+    cpp2::mcxi result1 = a1 + b1;
     std::cout<< "x" << " " << result1.to_string() << std::endl;
     
     cpp2::mcxi a2("c2x2i");
     cpp2::mcxi b2("4c8x8i");
-    auto result2 = a2 + b2;
+    cpp2::mcxi result2 = a2 + b2;
     std::cout<< "6cx" << " " << result2.to_string() << std::endl;
     
     cpp2::mcxi a3("m2ci");
@@ -61,9 +62,9 @@ int main() {
     cpp2::mcxi result8 = a8 + b8;
     std::cout<< "mx" << " " << result8.to_string() << std::endl;
 
-    cpp2::mcxi a5("i");
-    cpp2::mcxi b5("9m9c9x8i");
-    cpp2::mcxi result5 = a5 + b5;
+    cpp2::mcxi a9("9m8c7xi");
+    cpp2::mcxi b9("c2x8i");
+    cpp2::mcxi result9 = a9 + b9;
     std::cout<< "9m9c9x9i" << " " << result5.to_string() << std::endl;
 
 }
