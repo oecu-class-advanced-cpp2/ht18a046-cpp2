@@ -8,12 +8,58 @@ namespace cpp2 {
     * 
     * mcxi記法を解析するクラスです。
     * 
+    * mcxiの数値と文字の対応表
+    * m : 1000
+    * c :  100
+    * x :   10
+    * i :    1
+    * 
+    * 有効数字
+    * 2から9まで
+    * 
+    * mcxiの文字は一つの文字列にそれぞれ一つまで
+    * 
+    * 指定された文字列を解析して、オブジェクトを初期化します。
+    * 以下の場合には例外が創出されます。
+    * 
+    * 1.[2 - 9, m, c, x, i] 以外の文字が出現した場合
+    * 2. 2 文字続けて数字(2 - 9) が出現した場合
+    * 3. m, c, x, i がこの順序で出現しなかった場合
+    * ただし、例えば mx のように、特定の文字をスキップする事は許容されます。
     */
     /*---------------------------------------------*/
     class mcxi
     {
+        private:
+        //mcxiの数値を格納する変数
+            int value_;
 
+        public:
+        //mcxiのコンストラクタを定義
+        mcxi(const std::string& s);//コンストラクタ
+
+        //メソッド同士の足し算を定義
+        friend mcxi operator+(mcxi a, mcxi b);//例：a0＋b0の計算
+
+        //mcxiの計算結果をstringに直すモノを定義
+        std::string to_string() const;
     };
+
+    mcxi::mcxi(const std::string& s) : value_(0)
+
+    {
+
+    }
+
+    mcxi operator+(mcxi a, mcxi b)
+    {
+        return mcxi();
+    }
+
+    std::string mcxi::to_string() const
+    {
+        return std::string();
+    }
 } //namespace cpp2
 
 int main() {
@@ -65,6 +111,6 @@ int main() {
     cpp2::mcxi a9("9m8c7xi");
     cpp2::mcxi b9("c2x8i");
     cpp2::mcxi result9 = a9 + b9;
-    std::cout<< "9m9c9x9i" << " " << result5.to_string() << std::endl;
+    std::cout<< "9m9c9x9i" << " " << result9.to_string() << std::endl;
 
 }
