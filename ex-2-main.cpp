@@ -57,6 +57,7 @@ namespace cpp2 {
 
         int digit = 0;
         int unit = 0;
+        int count = 0;
 
         for (auto pos = s.begin(); pos != s.end(); pos++) {
             if (judgment(*pos))
@@ -65,62 +66,69 @@ namespace cpp2 {
                 value_ += tacit(digit, 1)*unit;
                 digit = 0;
             }
-            else if(digit == 0)
+            else
             {
-                digit = trans(*pos);
+                if (digit == 0)
+                {
+                    digit = trans(*pos);
+                }
+                else
+                {
+                    count++;
+                }
             }
         }
+
+        if (count != 0)
+        {
+            value_ = 0;
+        }
+
+        std::cout << "value_" << value_ << std::endl << std::endl;
     }
 
     int mcxi::trans(char c)
     {
-        if (c == '2')
+        switch (c)
         {
+        case '2':
             return 2;
-        }
-        else if (c == '3')
-        {
+            break;
+        case '3':
             return 3;
-        }
-        else if (c == '4')
-        {
+            break;
+        case '4':
             return 4;
-        }
-        else if (c == '5')
-        {
+            break;
+        case '5':
             return 5;
-        }
-        else if (c == '6')
-        {
+            break;
+        case '6':
             return 6;
-        }
-        else if (c == '7')
-        {
+            break;
+        case '7':
             return 7;
-        }
-        else if (c == '8')
-        {
+            break;
+        case '8':
             return 8;
-        }
-        else if (c == '9')
-        {
+            break;
+        case '9':
             return 9;
-        }
-        else if (c == 'm')
-        {
+            break;
+        case 'm':
             return 1000;
-        }
-        else if (c == 'c')
-        {
+            break;
+        case 'c':
             return 100;
-        }
-        else if (c == 'x')
-        {
+            break;
+        case 'x':
             return 10;
-        }
-        else if (c == 'i')
-        {
+            break;
+        case 'i':
             return 1;
+            break;
+        default:
+            break;
         }
 
         return 0;
@@ -128,21 +136,22 @@ namespace cpp2 {
 
     bool mcxi::judgment(char c)
     {
-        if (c == 'm')
+        switch (c)
         {
+        case 'm':
             return true;
-        }
-        else if (c == 'c')
-        {
+            break;
+        case 'c':
             return true;
-        }
-        else if (c == 'x')
-        {
+            break;
+        case 'x':
             return true;
-        }
-        else if (c == 'i')
-        {
+            break;
+        case 'i':
             return true;
+            break;
+        default:
+            break;
         }
 
         return false;
@@ -224,6 +233,8 @@ int main() {
     cpp2::mcxi b9("c2x8i");
     //cpp2::mcxi result9 = a9 + b9;
     //std::cout<< "9m9c9x9i" << " " << result9.to_string() << std::endl;
+
+    cpp2::mcxi a10("25i");
 
     std::cin.get();
     return 0;
