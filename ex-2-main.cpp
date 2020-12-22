@@ -38,7 +38,11 @@ namespace cpp2 {
         //mcxiのコンストラクタを定義
         mcxi(const std::string& s);//コンストラクタ
 
-        int hanntei(char c);
+        int trans(char c);
+
+        bool judgment(char c);
+
+        int tacit(int digit, int num);
 
         //メソッド同士の足し算を定義
         //friend mcxi operator+(mcxi a, mcxi b);//例：a0＋b0の計算
@@ -49,26 +53,26 @@ namespace cpp2 {
 
     mcxi::mcxi(const std::string& s) : value_(0)
     {
-        //○○ = s;
-
         //int digit = *pos - '0';で実行可能
 
-        for (auto pos = s.begin(); pos != s.end(); pos++) {
-            std::cout << *pos << "  ";
-            std::cout << "(" << *pos - '0' << ")" << ",   ";
-        }
-        std::cout << std::endl;
+        int digit = 0;
+        int unit = 0;
 
         for (auto pos = s.begin(); pos != s.end(); pos++) {
-            std::cout << *pos << "  ";
-            std::cout << "(" << hanntei(*pos) << ")" << ",  ";
+            if (judgment(*pos))
+            {
+                unit = trans(*pos);
+                value_ += tacit(digit, 1)*unit;
+                digit = 0;
+            }
+            else if(digit == 0)
+            {
+                digit = trans(*pos);
+            }
         }
-        std::cout << std::endl << std::endl;
-
-        //value_ = ○○;
     }
 
-    int mcxi::hanntei(char c)
+    int mcxi::trans(char c)
     {
         if (c == '2')
         {
@@ -122,7 +126,50 @@ namespace cpp2 {
         return 0;
     }
 
-    //mcxi operator+(mcxi a, mcxi b){return mcxi();}
+    bool mcxi::judgment(char c)
+    {
+        if (c == 'm')
+        {
+            return true;
+        }
+        else if (c == 'c')
+        {
+            return true;
+        }
+        else if (c == 'x')
+        {
+            return true;
+        }
+        else if (c == 'i')
+        {
+            return true;
+        }
+
+        return false;
+    }
+
+    int mcxi::tacit(int digit, int num)
+    {
+        if (digit >= 2 && digit <= 9)
+        {
+            return digit;
+        }
+        else
+        {
+            return num;
+        }
+
+        return 0;
+    }
+
+    //mcxi operator+(mcxi a, mcxi b)
+    //{
+        //mcxi result();
+
+        //result() = a + b;
+
+        //return result();
+    //}
 
     //std::string mcxi::to_string() const{return std::string();}
 } //namespace cpp2
