@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <sstream>
 
 namespace cpp2 {
     /*---------------------------------------------*/
@@ -55,15 +56,11 @@ namespace cpp2 {
 
     mcxi::mcxi(const std::string& s) : value_(0)
     {
-        //int digit = *pos - '0';で実行可能
-
         int digit = 0;
         int unit = 0;
         int before_unit = 0;
         int count_NUM = 0;
         int count_MCXI = 0;
-
-        std::cout << s << std::endl;
 
         for (auto pos = s.begin(); pos != s.end(); pos++) {
             if (*pos >= '2' && *pos <= '9')
@@ -97,12 +94,8 @@ namespace cpp2 {
 
         if (count_NUM != 0 || count_MCXI != 0)
         {
-            //std::cout << "count_NUM: " << count_NUM << std::endl;
-            //std::cout << "count_MCXI: " << count_MCXI << std::endl;
             value_ = 0;
         }
-
-        std::cout << "value_: " << value_ << std::endl << std::endl;
     }
 
     int mcxi::trans(char c)
@@ -160,114 +153,106 @@ namespace cpp2 {
 
     std::string mcxi::to_string() const
     {
-        std::string key;
+        std::stringstream key;
 
-        int q = value_ / 1000;
-        int w = q * 1000 - value_ / 100;
-        int e = q * 1000 - w * 100 - value_ / 10;
-        int r = q * 1000 - w * 100 - e * 10 - value_ / 1;
+        int m = value_ / 1000;
+        int c = value_ / 100 - m * 10;
+        int x = value_ / 10 - (m * 100 + c * 10);
+        int i = value_ / 1 - (m * 1000 + c * 100 + x * 10);
 
-        if (q == 1) {
-            key = 'm';
+        if (m == 1) {
+            key << 'm';
         }
 
-        if (q > 1) {
-            key = q;
-            key += 'm';
+        if (m > 1) {
+            key << m;
+            key << 'm';
         }
 
-        if (w == 1) {
-            key = 'c';
+        if (c == 1) {
+            key << 'c';
         }
 
-        if (w > 1) {
-            key = w;
-            key += 'c';
+        if (c > 1) {
+            key << c;
+            key << 'c';
         }
 
-        if (e == 1) {
-            key = 'x';
+        if (x == 1) {
+            key << 'x';
         }
 
-        if (e > 1) {
-            key = e;
-            key += 'x';
+        if (x > 1) {
+            key << x;
+            key << 'x';
         }
 
-        if (r == 1) {
-            key = 'i';
+        if (i == 1) {
+            key << 'i';
         }
 
-        if (r > 1) {
-            key = r;
-            key += 'i';
+        if (i > 1) {
+            key << i;
+            key << 'i';
         }
 
-        return key;
+        return key.str();
     }
 } //namespace cpp2
 
 
 int main() {
+    std::cout << "番号 答 計算結果" << std::endl;
+
     cpp2::mcxi a0("xi");
     cpp2::mcxi b0("x9i");
     cpp2::mcxi result0 = a0 + b0;
-    std::cout << "mcxi文字列の数値変換　" << result0.getvalue_() << std::endl;
-    //std::cout<< "3x" << " " << result0.to_string() << std::endl;
+    std::cout << "No.0 " << "3x" << " " << result0.to_string() << std::endl;
 
     cpp2::mcxi a1("i");
     cpp2::mcxi b1("9i");
     cpp2::mcxi result1 = a1 + b1;
-    std::cout << "mcxi文字列の数値変換　" << result1.getvalue_() << std::endl;
-    //std::cout<< "x" << " " << result1.to_string() << std::endl;
+    std::cout << "No.1 " << "x" << " " << result1.to_string() << std::endl;
     
     cpp2::mcxi a2("c2x2i");
     cpp2::mcxi b2("4c8x8i");
     cpp2::mcxi result2 = a2 + b2;
-    std::cout << "mcxi文字列の数値変換　" << result2.getvalue_() << std::endl;
-    //std::cout<< "6cx" << " " << result2.to_string() << std::endl;
+    std::cout << "No.2 " << "6cx" << " " << result2.to_string() << std::endl;
     
     cpp2::mcxi a3("m2ci");
     cpp2::mcxi b3("4m7c9x8i");
     cpp2::mcxi result3 = a3 + b3;
-    std::cout << "mcxi文字列の数値変換　" << result3.getvalue_() << std::endl;
-    //std::cout<< "5m9c9x9i" << " " << result3.to_string() << std::endl;
+    std::cout << "No.3 " << "5m9c9x9i" << " " << result3.to_string() << std::endl;
 
     cpp2::mcxi a4("9c9x9i");
     cpp2::mcxi b4("i");
     cpp2::mcxi result4 = a4 + b4;
-    std::cout << "mcxi文字列の数値変換　" << result4.getvalue_() << std::endl;
-    //std::cout<< "m" << " " << result4.to_string() << std::endl;
+    std::cout << "No.4 " << "m" << " " << result4.to_string() << std::endl;
 
     cpp2::mcxi a5("i");
     cpp2::mcxi b5("9m9c9x8i");
     cpp2::mcxi result5 = a5 + b5;
-    std::cout << "mcxi文字列の数値変換　" << result5.getvalue_() << std::endl;
-    //std::cout<< "9m9c9x9i" << " " << result5.to_string() << std::endl;
+    std::cout << "No.5 " << "9m9c9x9i" << " " << result5.to_string() << std::endl;
 
     cpp2::mcxi a6("m");
     cpp2::mcxi b6("i");
     cpp2::mcxi result6 = a6 + b6;
-    std::cout << "mcxi文字列の数値変換　" << result6.getvalue_() << std::endl;
-    //std::cout<< "mi" << " " << result6.to_string() << std::endl;
+    std::cout << "No.6 " << "mi" << " " << result6.to_string() << std::endl;
 
     cpp2::mcxi a7("i");
     cpp2::mcxi b7("m");
     cpp2::mcxi result7 = a7 + b7;
-    std::cout << "mcxi文字列の数値変換　" << result7.getvalue_() << std::endl;
-    //std::cout<< "mi" << " " << result7.to_string() << std::endl;
+    std::cout << "No.7 " << "mi" << " " << result7.to_string() << std::endl;
 
     cpp2::mcxi a8("m9i");
     cpp2::mcxi b8("i");
     cpp2::mcxi result8 = a8 + b8;
-    std::cout << "mcxi文字列の数値変換　" << result8.getvalue_() << std::endl;
-    //std::cout<< "mx" << " " << result8.to_string() << std::endl;
+    std::cout << "No.8 " << "mx" << " " << result8.to_string() << std::endl;
 
     cpp2::mcxi a9("9m8c7xi");
     cpp2::mcxi b9("c2x8i");
     cpp2::mcxi result9 = a9 + b9;
-    std::cout << "mcxi文字列の数値変換　" << result9.getvalue_() << std::endl;
-    //std::cout<< "9m9c9x9i" << " " << result9.to_string() << std::endl;
+    std::cout << "No.9 " << "9m9c9x9i" << " " << result9.to_string() << std::endl;
 
     cpp2::mcxi a10("m284i");
     cpp2::mcxi b10("mmccccxxi");
