@@ -52,6 +52,8 @@ namespace cpp2 {
 
         //mcxi‚ÌŒvŽZŒ‹‰Ê‚ðstring‚É’¼‚·ƒ‚ƒm‚ð’è‹`
         std::string to_string() const;
+
+        std::string answer(const std::string& strX, const std::string&strY);
     };
 
     mcxi::mcxi(const std::string& s) : value_(0)
@@ -146,7 +148,10 @@ namespace cpp2 {
 
     int mcxi::setvalue_(mcxi a, mcxi b)
     {
-        value_ = a.getvalue_() + b.getvalue_();
+        if (a.getvalue_() != 0 && b.getvalue_() != 0)
+        {
+            value_ = a.getvalue_() + b.getvalue_();
+        }
 
         return value_;
     }
@@ -154,6 +159,11 @@ namespace cpp2 {
     std::string mcxi::to_string() const
     {
         std::stringstream key;
+
+        if (value_ == 0)
+        {
+            key << '-';
+        }
 
         int m = value_ / 1000;
         int c = value_ / 100 - m * 10;
@@ -198,65 +208,80 @@ namespace cpp2 {
 
         return key.str();
     }
+    std::string mcxi::answer(const std::string & strX, const std::string & strY)
+    {
+        if (strX == strY)
+        {
+            return "³‰ð‚Å‚·B";
+        }
+        else
+        {
+            return "•s³‰ð‚Å‚·B";
+        }
+    }
 } //namespace cpp2
 
 
 int main() {
-    std::cout << "”Ô† “š ŒvŽZŒ‹‰Ê" << std::endl;
-
     cpp2::mcxi a0("xi");
     cpp2::mcxi b0("x9i");
     cpp2::mcxi result0 = a0 + b0;
-    std::cout << "No.0 " << "3x" << " " << result0.to_string() << std::endl;
+    std::cout << "No.0 " << result0.answer("3x", result0.to_string()) << std::endl;
 
     cpp2::mcxi a1("i");
     cpp2::mcxi b1("9i");
     cpp2::mcxi result1 = a1 + b1;
-    std::cout << "No.1 " << "x" << " " << result1.to_string() << std::endl;
+    std::cout << "No.1 " << result1.answer("x", result1.to_string()) << std::endl;
     
     cpp2::mcxi a2("c2x2i");
     cpp2::mcxi b2("4c8x8i");
     cpp2::mcxi result2 = a2 + b2;
-    std::cout << "No.2 " << "6cx" << " " << result2.to_string() << std::endl;
+    std::cout << "No.2 " << result2.answer("6cx", result2.to_string()) << std::endl;
     
     cpp2::mcxi a3("m2ci");
     cpp2::mcxi b3("4m7c9x8i");
     cpp2::mcxi result3 = a3 + b3;
-    std::cout << "No.3 " << "5m9c9x9i" << " " << result3.to_string() << std::endl;
+    std::cout << "No.3 " << result3.answer("5m9c9x9i", result3.to_string()) << std::endl;
 
     cpp2::mcxi a4("9c9x9i");
     cpp2::mcxi b4("i");
     cpp2::mcxi result4 = a4 + b4;
-    std::cout << "No.4 " << "m" << " " << result4.to_string() << std::endl;
+    std::cout << "No.4 " << result4.answer("m", result4.to_string()) << std::endl;
 
     cpp2::mcxi a5("i");
     cpp2::mcxi b5("9m9c9x8i");
     cpp2::mcxi result5 = a5 + b5;
-    std::cout << "No.5 " << "9m9c9x9i" << " " << result5.to_string() << std::endl;
+    std::cout << "No.5 " << result5.answer("9m9c9x9i", result5.to_string()) << std::endl;
 
     cpp2::mcxi a6("m");
     cpp2::mcxi b6("i");
     cpp2::mcxi result6 = a6 + b6;
-    std::cout << "No.6 " << "mi" << " " << result6.to_string() << std::endl;
+    std::cout << "No.6 " << result6.answer("mi", result6.to_string()) << std::endl;
 
     cpp2::mcxi a7("i");
     cpp2::mcxi b7("m");
     cpp2::mcxi result7 = a7 + b7;
-    std::cout << "No.7 " << "mi" << " " << result7.to_string() << std::endl;
+    std::cout << "No.7 " << result7.answer("mi", result7.to_string()) << std::endl;
 
     cpp2::mcxi a8("m9i");
     cpp2::mcxi b8("i");
     cpp2::mcxi result8 = a8 + b8;
-    std::cout << "No.8 " << "mx" << " " << result8.to_string() << std::endl;
+    std::cout << "No.8 " << result8.answer("mx", result8.to_string()) << std::endl;
 
     cpp2::mcxi a9("9m8c7xi");
     cpp2::mcxi b9("c2x8i");
     cpp2::mcxi result9 = a9 + b9;
-    std::cout << "No.9 " << "9m9c9x9i" << " " << result9.to_string() << std::endl;
+    std::cout << "No.9 " << result9.answer("9m9c9x9i", result9.to_string()) << std::endl;
 
     cpp2::mcxi a10("m284i");
     cpp2::mcxi b10("mmccccxxi");
-    cpp2::mcxi c10("cixmcicx");
+    cpp2::mcxi result10 = a10 + b10;
+    std::cout << "No.10 " << result10.answer("3m4c3x5i", result10.to_string()) << std::endl;
+
+    cpp2::mcxi a11("cixmcicx");
+    cpp2::mcxi b11("3m2i");
+    cpp2::mcxi result11 = a11 + b11;
+    std::cout << "No.11 " << result11.answer("5m3c2x4i", result11.to_string()) << std::endl;
 
     std::cin.get();
     return 0;
